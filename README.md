@@ -26,6 +26,25 @@ This project demonstrates how to deploy a Lambda function using a container imag
     ```sh
     docker run -d -p 9000:8080 --entrypoint /usr/local/bin/aws-lambda-rie lambda:latest ./main
     ```
+You can also follow the method below to create an alpine based image, this image is much smaller than the aws linux based image. The only difference here is to test it locally need to install the aws lambda runtime emulator which is in built available in the previous image.
+
+Build the image
+
+```
+docker build -f Dockerfile-alpine --platform linux/amd64 --provenance=false -t aws_container_lambda:latest .
+```
+
+Tag it
+
+```
+docker tag aws_container_lambda:latest 115600316073.dkr.ecr.us-east-1.amazonaws.com/aws_container_lambda:latest
+```
+
+Push it 
+
+```
+docker push 115600316073.dkr.ecr.us-east-1.amazonaws.com/aws_container_lambda:latest
+```
 
 4. Create an ECR repository and push the image:
     ```sh
